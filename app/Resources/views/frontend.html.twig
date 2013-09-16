@@ -1,0 +1,105 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+{% block body %}
+        <header id="top">
+            <h1 id="applogo">
+                <a rel="home" href="{{ path('homepage') }}">
+                    <img src="{{ asset('images/tebacten_logo.png') }}" border="0" />
+                    TeBactEn
+                </a>
+
+            </h1>
+            <nav id="access" role="navigation">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li><a href="{{ path('tracking_home') }}">Tracking</a></li>
+                    {% endif %}
+                    <li><a href="mailto:mkrallinger@cnio.es">Feedback</a></li>
+                    <li><strong>Search by:</strong> </li>
+                    <li>
+                        <select accesskey="S" id="searchby" onchange="goToPage()">
+                            <option value="">Please select one</option>
+                            {% if organismo is defined %}
+                                <option value="{{ path('list_species') }}" selected>Species</option>
+                            {% else %}
+                                <option value="{{ path('list_species') }}">Species</option>
+                            {% endif %}
+
+                            {% if enzima is defined %}
+                                <option value="{{ path('list_enzymes') }}" selected>Enzymes</option>
+                            {% else %}
+                                <option value="{{ path('list_enzymes') }}">Enzymes</option>
+                            {% endif %}
+
+                            {% if compuesto is defined %}
+                                <option value="{{ path('list_compounds') }}" selected>Compounds</option>
+                            {% else %}
+                                <option value="{{ path('list_compounds') }}">Compounds</option>
+                            {% endif %}
+
+                            {% if keyword is defined %}
+                                <option value="{{ path('list_keywords') }}" selected>Keywords</option>
+                            {% else %}
+                                <option value="{{ path('list_keywords') }}">Keywords</option>
+                            {% endif %}
+                         </select>
+                    </li>
+                </ul>
+            </nav>
+            <div class="clear-both"></div>
+            <div id="user-box">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>&nbsp;|&nbsp;
+                    <a href="{{ path('fos_user_registration_register') }}">Register</a>
+                {% endif %}
+            </div>
+        </header>
+        <section class="content" role="main">
+            {% block article %}{% endblock %}
+        </section>
+        <footer id="bottom" role="contentinfo">
+            <nav>
+				<ul>
+					<li>
+					   &copy; {{ 'now'|date('Y') }} - Spanish National Cancer Research Centre. CNIO Structural Biology and BioComputing Programme
+					</li>
+					<li>
+    					<a target="_blank" href="http://www.microme.eu"><img src="{{ asset('images/microme-off.png') }}" class="rollover" border="0" /></a>
+					</li>
+					<li>
+    					<a target="_blank" href="http://www.cnio.es"><img src="{{ asset('images/cnio-off.png') }}" class="rollover" border="0" /></a>
+					</li>
+					<li>
+					   <a target="_blank" href="http://www.inab.org"><img src="{{ asset('images/inb-off.png') }}" class="rollover" border="0" /></a>
+				    </li>
+				</ul>
+			</nav>
+        </footer>
+        {% block javascripts_footer %}
+        {% endblock %}
+        <script>
+            function goToPage()
+             {
+                var e = document.getElementById("searchby");
+                var url = e.options[e.selectedIndex].value;
+                if (url != "")
+                {
+                    window.open(url,'_self');
+                }
+             }
+        </script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends '::frontend.html.twig' %}
+
+{% block title %}Edit evidence {{ evidencia.id }}{% endblock %}
+{% block article %}
+    <h1>{{ block('title') }}</h1>
+    <ul>
+        <li><strong>Evidencia</strong>: {{ evidencia.texto }}</li>
+
+        {% for evidenciaEntidad in entidades %}
+            <li>
+                <strong>Entidad implicada</strong>: {{ evidenciaEntidad.getEntidadId.nombre }} ({{ evidenciaEntidad.getEntidadId.getTipo }})
+            </li>
+        {% endfor %}
+    </ul>
+    <form action="{{ path('edited_evidence_specie', {'id_organismo':id_organismo, 'id_evidencia':evidencia.id}) }}" method="post" {{ form_enctype(formEvidencia) }}>
+        {# form_widget(formEvidencia) #}
+         {{ form_errors(formEvidencia) }}
+
+        {{ form_row(formEvidencia.created) }}
+        {{ form_row(formEvidencia.updated) }}
+        {# form_row(formEvidencia.origen) #}
+        {{ form_row(formEvidencia.code) }}
+        {{ form_row(formEvidencia.texto) }}
+
+
+        {# form_rest(formEvidencia) #}
+
+
+        {# formEvidencia.vars.value.code #}
+        {# formEvidencia.vars.value.id #}
+        {# formEvidencia.vars.full_name #}
+        <input type="submit" />
+    </form>
+    <ul>
+        <li>
+            <a href="">Volver al listado</a>
+        </li>
+    </ul>
+{% endblock %}

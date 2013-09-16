@@ -1,0 +1,62 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Evidencia</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ entity.code }}</td>
+            </tr>
+            <tr>
+                <th>Texto</th>
+                <td>{{ entity.texto }}</td>
+            </tr>
+            <tr>
+                <th>Curated</th>
+                <td>{{ entity.curated }}</td>
+            </tr>
+            <tr>
+                <th>Tipo de origen</th>
+                <td>{{ entity.origen.tipo }}</td>
+            </tr>
+            <tr>
+                <th>URL de origen</th>
+                <td><a class="popupwindow" href="{{ entity.origen.url }}">{{ entity.origen.url }}</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('evidencia_show', {'id': entity.id}) }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('evidencia_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('evidencia_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+<script>
+    $('.popupwindow').popupWindow( {
+        centerScreen:1,
+        scrollbars:1,
+        width: 990,
+        height: 740
+    } );
+</script>
+{% endblock %}

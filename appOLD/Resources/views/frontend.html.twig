@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+
+{% block body %}
+        <header id="top">
+            <h1 id="applogo">
+                <a rel="home" href="{{ path('homepage') }}">
+                    <img src="{{ asset('images/tebacten_logo.png') }}" border="0" />
+                    TeBactEn
+                </a>
+
+            </h1>
+            <nav id="access" role="navigation">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li><strong>Search by:</strong> </li>
+                    <li><a href="{{ path('list_species') }}" class="button gray">Species</a></li>
+                    <li><a href="{{ path('list_enzymes') }}" class="button gray">Enzymes</a></li>
+                    <li><a href="{{ path('list_compounds') }}" class="button gray">Chemicals</a></li>
+                </ul>
+            </nav>
+            <div class="clear-both"></div>
+            <div id="user-box">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>&nbsp;|&nbsp;
+                    <a href="{{ path('fos_user_registration_register') }}">Register</a>
+                {% endif %}
+            </div>
+        </header>
+        <section class="content" role="main">
+            {% block article %}{% endblock %}
+        </section>
+        <footer id="bottom" role="contentinfo">
+            <nav>
+				<ul>
+					<li>
+					   &copy; {{ 'now'|date('Y') }} - Spanish National Cancer Research Centre. CNIO Structural Biology and BioComputing Programme
+					</li>
+					<li>
+    					<a target="_blank" href="http://www.microme.eu"><img src="{{ asset('images/microme-off.png') }}" class="rollover" border="0" /></a>
+					</li>
+					<li>
+    					<a target="_blank" href="http://www.cnio.es"><img src="{{ asset('images/cnio-off.png') }}" class="rollover" border="0" /></a>
+					</li>
+					<li>
+					   <a target="_blank" href="http://www.inab.org"><img src="{{ asset('images/inb-off.png') }}" class="rollover" border="0" /></a>
+				    </li>
+				</ul>
+			</nav>
+        </footer>
+        {% block javascripts_footer %}
+        {% endblock %}
+{% endblock %}

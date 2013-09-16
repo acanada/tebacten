@@ -1,0 +1,3 @@
+services:
+    utilidades:
+        class: EtoxMicrome\EvidenciaEntidadBundle\Utilidades

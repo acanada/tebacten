@@ -1,0 +1,5 @@
+{% set textminingName = entidad.vars['data'].getTextminingName %}
+{% set idTrigger = "taxId_" ~ textminingName %}
+<strong>Organism found:</strong><br/>
+<a href="#" id="{{ idTrigger }}" name="{{ idTrigger }}" onclick="getTaxId('{{ asset('scripts/returnTaxonomy.py') }}','{{ contador }}', 'fromEntity')">(Search idNCBI)</a>
+<div id="text_{{ contador }}" class="taxId_links"></div>

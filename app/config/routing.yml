@@ -1,0 +1,412 @@
+relacion_usuario:
+    resource: "@RelacionUsuarioBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+evidencia_entidad:
+    resource: "@EvidenciaEntidadBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+evidencia_dominio:
+    resource: "@EvidenciaDominioBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+dominio:
+    resource: "@DominioBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+relacion:
+    resource: "@RelacionBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+entidad:
+    resource: "@EntidadBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+evidencia:
+    resource: "@EvidenciaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+origen:
+    resource: "@OrigenBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /change-password
+
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+
+
+homepage:
+    pattern: /
+    defaults: { _controller: FrontendBundle:Default:home }
+
+list_species:
+    pattern:    /species/
+    defaults:   { _controller: EvidenciaEntidadBundle:Species:index, id_organismo: 48671 }
+
+list_enzymes:
+    pattern:    /enzymes/
+    defaults:   { _controller: EvidenciaEntidadBundle:Enzymes:index, id_enzima: 31944 }
+
+list_compounds:
+    pattern:    /compounds/
+    defaults:   { _controller: EvidenciaEntidadBundle:Compounds:index, id_compuesto: 23854 }
+
+list_keywords:
+    pattern:    /keywords/
+    defaults:   { _controller: EvidenciaEntidadBundle:Keywords:index, keyword: "coliform" }
+
+
+#list_species_id_organismo:
+#    pattern:    /species/{id_organismo}/
+#    defaults:   { _controller: EvidenciaEntidadBundle:Species:index }
+
+evidencias_organismo_advance_search:
+    pattern:    /specie/{name}/{urlParam}
+    defaults:   { _controller: EvidenciaEntidadBundle:Species:indexFromNameAdvanceSearch }
+    requirements:
+        _method: GET
+
+evidencias_organismo_id:
+    pattern:    /specie/{id_organismo}/
+    defaults:   { _controller: EvidenciaEntidadBundle:Species:index }
+    requirements:
+        _method: GET
+        id_organismo: \d+
+
+evidencias_organismo_name:
+    pattern:    /specie/{name}/
+    defaults:   { _controller: EvidenciaEntidadBundle:Species:indexFromName }
+    requirements:
+        _method: GET
+
+
+autocomplete:
+    pattern:    /scripts/autocomplete/
+    defaults:   { _controller: EntidadBundle:Entidad:autocomplete }
+
+autocomplete_user:
+    pattern:    /scripts/autocomplete-user/
+    defaults:   { _controller: EntidadBundle:Entidad:autocomplete_user }
+
+evidencia_organismo_show:
+    pattern:    /specie/{id_organismo}/evidence/{id}/
+    #defaults:   { _controller: EvidenciaBundle:Evidencia:show }
+    defaults:   { _controller: EvidenciaBundle:Evidencia:edit }
+    requirements:
+        _method: GET
+
+evidencia_organismo_edit:
+    pattern:    /specie/{id_organismo}/evidence/{id}/edit/
+    defaults:   { _controller: EvidenciaBundle:Evidencia:edit }
+    requirements:
+        _method: GET
+
+evidencia_organismo_delete:
+    pattern:    /specie/{id_organismo}/evidence/{id}/delete/
+    defaults:   { _controller: EvidenciaBundle:Evidencia:delete }
+    requirements:
+        _method: POST
+
+evidencia_organismo_update:
+    pattern:    /specie/{id_organismo}/evidence/{id}/update/
+    defaults:   { _controller: EvidenciaBundle:Evidencia:update }
+    requirements:
+        _method: POST
+
+evidencia_organismo_relations:
+    pattern:    /specie/{id_organismo}/evidence/{id}/relations/
+    defaults:   { _controller: EvidenciaBundle:Evidencia:relations}
+    requirements:
+        _method: GET
+
+guardar_relaciones:
+    pattern:    /save-relations/{entity_type}/{entity_id}/evidence/{id_evidence}
+    defaults:   { _controller: EvidenciaBundle:Evidencia:saveRelations }
+    requirements:
+        _method: POST
+
+
+evidencia_enzima_show:
+    pattern:    /enzyme/{id_enzima}/evidence/{id}/
+    #defaults:   { _controller: EvidenciaBundle:Enzima:show }
+    defaults:   { _controller: EvidenciaBundle:Enzima:edit }
+    requirements:
+        _method: GET
+
+
+evidencias_enzima_id:
+    pattern:    /enzyme/{id_enzima}/
+    defaults:   { _controller: EvidenciaEntidadBundle:Enzymes:index }
+    requirements:
+        _method: GET
+        id_enzima: \d+
+
+evidencias_enzima_advance_search:
+    pattern:    /enzyme/{name}/{urlParam}
+    defaults:   { _controller: EvidenciaEntidadBundle:Enzymes:indexFromNameAdvanceSearch }
+    requirements:
+        _method: GET
+
+evidencias_enzima_name:
+    pattern:    /enzyme/{name}/
+    defaults:   { _controller: EvidenciaEntidadBundle:Enzymes:indexFromName }
+    requirements:
+        _method: GET
+
+evidencia_enzima_edit:
+    pattern:    /enzyme/{id_enzima}/evidence/{id}/edit/
+    defaults:   { _controller: EvidenciaBundle:Enzima:edit }
+    requirements:
+        _method: GET
+
+evidencia_enzima_update:
+    pattern:    /enzyme/{id_enzima}/evidence/{id}/update/
+    defaults:   { _controller: EvidenciaBundle:Enzima:update }
+    requirements:
+        _method: POST
+
+evidencia_enzima_delete:
+    pattern:    /enzyme/{id_enzima}/evidence/{id}/delete/
+    defaults:   { _controller: EvidenciaBundle:Enzima:delete }
+    requirements:
+        _method: POST
+
+
+evidencias_compuesto_id:
+    pattern:    /compound/{id_compuesto}/
+    defaults:   { _controller: EvidenciaEntidadBundle:Compounds:index }
+    requirements:
+        _method: GET
+        id_compuesto: \d+
+
+evidencias_compuesto_advance_search:
+    pattern:    /compound/{name}/{urlParam}
+    defaults:   { _controller: EvidenciaEntidadBundle:Compounds:indexFromNameAdvanceSearch }
+    requirements:
+        _method: GET
+
+evidencias_compuesto_name:
+    pattern:    /compound/{name}/
+    defaults:   { _controller: EvidenciaEntidadBundle:Compounds:indexFromName }
+    requirements:
+        _method: GET
+
+evidencia_compuesto_show:
+    pattern:    /compound/{id_compuesto}/evidence/{id}/
+    #defaults:   { _controller: EvidenciaBundle:Evidencia:show }
+    defaults:   { _controller: EvidenciaBundle:Compuesto:edit }
+    requirements:
+        _method: GET
+
+evidencia_compuesto_edit:
+    pattern:    /compound/{id_compuesto}/evidence/{id}/edit/
+    defaults:   { _controller: EvidenciaBundle:Compuesto:edit }
+    requirements:
+        _method: GET
+
+evidencia_compuesto_update:
+    pattern:    /compound/{id_compuesto}/evidence/{id}/update/
+    defaults:   { _controller: EvidenciaBundle:Compuesto:update }
+    requirements:
+        _method: POST
+
+evidencia_compuesto_delete:
+    pattern:    /compound/{id_compuesto}/evidence/{id}/delete/
+    defaults:   { _controller: EvidenciaBundle:Compuesto:delete }
+    requirements:
+        _method: POST
+
+return_chebids:
+    pattern:    /get_chebids/
+    defaults:   { _controller: EntidadBundle:Entidad:getChebiIDs }
+    requirements:
+        _method: GET
+    options:
+        expose: true
+
+return_tax_id:
+    pattern:    /get_tax_id/
+    defaults:   { _controller: EntidadBundle:Entidad:getTaxID }
+    requirements:
+        _method: GET
+    options:
+        expose: true
+
+origen_show:
+    pattern:    /origen/{id}/
+    defaults:   { _controller: OrigenBundle:Origen:show }
+    requirements:
+        _method: GET
+
+origen_edit:
+    pattern:    /origen/{id}/edit/
+    defaults:   { _controller: OrigenBundle:Origen:edit }
+    requirements:
+        _method: GET
+
+origen_update:
+    pattern:    /origen/{id}/update/
+    defaults:   { _controller: OrigenBundle:Origen:update }
+    requirements:
+        _method: POST
+
+entidad_show:
+    pattern:    /entity/{id}/
+    defaults:   { _controller: EntidadBundle:Entidad:show }
+    requirements:
+        _method: GET
+
+entidad_edit:
+    pattern:    /entity/{id}/edit/
+    defaults:   { _controller: EntidadBundle:Entidad:edit }
+    requirements:
+        _method: GET
+
+entidad_update:
+    pattern:    /entity/{id}/edit/
+    defaults:   { _controller: EntidadBundle:Entidad:update }
+    requirements:
+        _method: POST
+
+evidenceDominium_show:
+    pattern: /evidenceDominium/{id}/
+    defaults: { _controller: EvidenciaDominioBundle:EvidenciaDominio:show }
+    requirements:
+        _method: GET
+
+evidenceDominium_edit:
+    pattern: /evidenceDominium/{id}/edit/
+    defaults: { _controller: EvidenciaDominioBundle:EvidenciaDominio:edit }
+    requirements:
+        _method: GET
+
+evidenceDominium_update:
+    pattern: /evidenceDominium/{id}/edit/
+    defaults: { _controller: EvidenciaDominioBundle:EvidenciaDominio:update }
+    requirements:
+        _method: POST
+
+evidenciaentidad_show:
+    pattern: /evidenceEntity/{id}/
+    defaults: { _controller: EvidenciaEntidadBundle:EvidenciaEntidad:show }
+    requirements:
+        _method: GET
+
+evidenciaentidad_edit:
+    pattern: /evidenceEntity/{id}/edit/
+    defaults: { _controller: EvidenciaEntidadBundle:EvidenciaEntidad:edit }
+    requirements:
+        _method: GET
+
+evidenciaentidad_update:
+    pattern: /evidenceEntity/{id}/update/
+    defaults: { _controller: EvidenciaEntidadBundle:EvidenciaEntidad:update }
+    requirements:
+        _method: POST
+
+evidencia_show:
+    pattern:    /evidence/{id}/
+    defaults:   { _controller: EvidenciaBundle:Default:show }
+    requirements:
+        _method: GET
+
+evidencia_edit:
+    pattern:    /evidence/{id}/edit/
+    defaults:   { _controller: EvidenciaBundle:Default:edit }
+    requirements:
+        _method: GET
+
+evidencia_update:
+    pattern: /evidence/{id}/update/
+    defaults: { _controller: EvidenciaBundle:Default:update }
+    requirements:
+        _method: POST
+
+evidencia_update_error:
+    pattern: /evidence/{id}/update/error/
+    defaults: { _controller: EvidenciaBundle:Evidencia:error, 'editForm': editForm }
+    requirements:
+        _method: GET
+
+close_window:
+    pattern:    /close_window/
+    defaults:   { _controller: RelacionBundle:Default:closeWindow }
+    requirements:
+        _method: GET
+
+tracking_home:
+    pattern:    /tracking/
+    defaults:   { _controller: RelacionUsuarioBundle:Tracking:index }
+    requirements:
+        _method: GET
+
+tracking_by_user:
+    pattern:    /tracking/{username}/
+    defaults:   { _controller: RelacionUsuarioBundle:Tracking:trackByUser }
+    requirements:
+        _method: GET
+
+tracking_by_user_and_date:
+    pattern:    /tracking/{username}/{startDate}/{endDate}/
+    defaults:   { _controller: RelacionUsuarioBundle:Tracking:trackByUserAndDate }
+    requirements:
+        _method: GET
+
+tracking_by_entity:
+    pattern:    /tracking/entity/{entity}/
+    defaults:   { _controller: RelacionUsuarioBundle:Tracking:trackByEntity }
+    requirements:
+        _method: GET
+
+tracking_by_entity_and_date:
+    pattern:    /tracking/entity/{entity}/{startDate}/{endDate}/
+    defaults:   { _controller: RelacionUsuarioBundle:Tracking:trackByEntityAndDate }
+    requirements:
+        _method: GET
+
+tracking_by_evidence:
+    pattern:    /tracking/evidence/{evidence}/
+    defaults:   { _controller: RelacionUsuarioBundle:Tracking:trackByEvidence }
+    requirements:
+        _method: GET
+
+tracking_by_evidence_and_date:
+    pattern:    /tracking/evidence/{evidence}/{startDate}/{endDate}/
+    defaults:   { _controller: RelacionUsuarioBundle:Tracking:trackByEvidenceAndDate }
+    requirements:
+        _method: GET

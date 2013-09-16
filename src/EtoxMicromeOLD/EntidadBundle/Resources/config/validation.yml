@@ -1,0 +1,6 @@
+EtoxMicrome\EntityBundle\Entity\Entidad:
+    properties:
+        nombre:
+            - NotBlank: ~
+        tipo:
+            - NotBlank: ~

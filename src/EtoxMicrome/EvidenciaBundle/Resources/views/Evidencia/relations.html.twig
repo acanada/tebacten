@@ -1,0 +1,13 @@
+
+{% form_theme edit_form.evidenciaEntidad with 'EvidenciaBundle:Form:fields.html.twig' %}
+{% block article -%}
+    <div id="content">
+        {% include 'arrayRelations.html.twig' with {'entity_type': entity_type} %}
+    </div>
+    <br/>
+    <br/>
+    <div class="clear-both"></div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('javascripts/etoxmicrome.js') }}"></script>
+{% endblock %}

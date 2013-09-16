@@ -1,0 +1,33 @@
+<div id="sidebar">
+    <h2>Curation pending</h2>
+
+    <ul>
+        <li><a class="button gray" href="#" data-dropdown="never-curated">Never curated</a></li>
+            <ul id="never-curated" class="f-dropdown tiny content">
+                {% for evidenciaId in neverCuratedArray[0] %}
+                    <li>
+                        <a href="{{ path('evidencia_enzima_edit', {'id_enzima': id_enzima, 'id': evidenciaId}) }}" >{{evidenciaId}}</a>
+                    </li>
+                {% endfor %}
+                <li>(total: {{ neverCuratedArray[1] }})</li>
+            </ul>
+        <li><a class="button gray" href="#" data-dropdown="once-curated">Once curated</a></li>
+        <ul id="once-curated" class="f-dropdown tiny content">
+            {% for evidenciaId in onceCuratedArray[0] %}
+                <li>
+                    <a href="{{ path('evidencia_enzima_edit', {'id_enzima': id_enzima, 'id': evidenciaId}) }}" >{{evidenciaId}}</a>
+                </li>
+            {% endfor %}
+            <li>(total: {{ onceCuratedArray[1] }})</li>
+        </ul>
+        <li><a class="button gray" href="#" data-dropdown="twice-curated">Twice curated</a></li>
+        <ul id="twice-curated" class="f-dropdown tiny content">
+            {% for evidenciaId in twiceCuratedArray[0] %}
+                <li>
+                    <a href="{{ path('evidencia_enzima_edit', {'id_enzima': id_enzima, 'id': evidenciaId}) }}" >{{evidenciaId}}</a>
+                </li>
+            {% endfor %}
+            <li>(total: {{ twiceCuratedArray[1] }})</li>
+        </ul>
+    </ul>
+</div>

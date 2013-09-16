@@ -1,0 +1,148 @@
+{% extends '::frontend.html.twig' %}
+{% block article -%}
+        <h3>Changes by {{username}}:</h3>
+        <table>
+            <tr>
+                <td>User: </td>
+                <td><input id="tags_user" class="ui-autocomplete-input text" onclick="this.value=''" placeholder="Type username" aria-haspopup="true" aria-autocomplete="list" role="textbox" autocomplete="off" value="{{ username }}"></td>
+            </tr>
+            <tr>
+                <td>From Date:</td>
+
+                {% set arrayFromStartDate=startDate|split("-") %}
+                {% set arrayFromEndDate=endDate|split("-") %}
+
+                <td><input id="startDate_user" class="datepicker text" type="text" value="{{ arrayFromStartDate[0] }}-{{ arrayFromStartDate[1] }}-{{ arrayFromStartDate[2] }}" placeholder="select date (optional)"></td>
+            </tr>
+            <tr>
+                <td>To Date:</td>
+                <td><input id="endDate_user" class="ui-autocomplete-input datepicker text" type="text" value="{{ arrayFromEndDate[0] }}-{{ arrayFromEndDate[1] }}-{{ arrayFromEndDate[2] }}" placeholder="select date (optional)"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><a id="search_user_changes" class="button orange" href="">Search</a></td>
+            </tr>
+        </table>
+
+        <table>
+        <tr>
+            <th>Created</th>
+            <th>idEvidencia</th>
+            <th>Entidad origen</th>
+            <th>Tipo de relaci&oacute;n</th>
+            <th>Entidad destino</th>
+        </tr>
+        {% set changes = arrayChanges.getResult %}
+        {% for change in changes %}
+            {% set idEvidencia = change["idEvidencia"] %}
+            <tr>
+                <td>{{ change["date"] | date("jS F Y \\a\\t g:ia") }}</td>
+                <td><a id="popupwindow_" href="{{ path('evidencia_show', {'id': idEvidencia}) }}">{{ idEvidencia }}</a></td>
+                <td>{{ change["evidenciaEntidadOrigen"] }}</td>
+                <td>{{ change["tipoRelacion"] }}</td>
+                <td>{{ change["evidenciaEntidadDestino"] }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+        <div class="pagination">
+            <ul class="pagination">
+                {% if paginador.currentPage > 1 %}
+                    <li class=""><a href="{{ path('tracking_by_user_and_date', { 'page': paginador.previousPage, 'username': username, 'startDate': startDate, 'endDate': endDate }) }}">previous</a></li>
+                {% else %}
+                    <li class="disabled">previous</li>
+                {% endif %}
+                {% for page in paginador.minPageInRange..paginador.maxPageInRange %}
+                    {% if page == paginador.currentPage %}
+                        <li class="current">{{ page }}</li>
+                    {% else %}
+                        <li><a href="{{ path('tracking_by_user_and_date', { 'page': page, 'username': username, 'startDate': startDate, 'endDate': endDate}) }}">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if paginador.currentPage < paginador.lastPage %}
+                    <li><a href="{{ path('tracking_by_user_and_date', { 'page': paginador.nextPage, 'username': username, 'startDate': startDate, 'endDate': endDate }) }}">next</a></li>
+                {% else %}
+                    <li>next</li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="clear-both"></div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        // implementation of disabled form fields
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+        var checkin = $('#startDate_user').fdatepicker({
+            format: 'dd-mm-yyyy',
+            onRender: function (date) {
+                return date.valueOf() > now.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            if (ev.date.valueOf() > checkout.date.valueOf()) {
+                var newDate = new Date(ev.date)
+                newDate.setDate(newDate.getDate() + 1);
+                checkout.setValue(newDate);
+            }
+            checkin.hide();
+            $('#endDate_user')[0].focus();
+        }).data('datepicker');
+        var checkout = $('#endDate_user').fdatepicker({
+            format: 'dd-mm-yyyy',
+            onRender: function (date) {
+                return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            checkout.hide();
+        }).data('datepicker');
+
+
+
+        $(function() {
+            $( "#tags_user" ).autocomplete({
+                source: "{{ path('autocomplete_user') }}",
+                minLength:3,
+            });
+        });
+
+        $("#search_user_changes").click(function() {
+            var username=$('#tags_user').val();
+            urlParam="";
+            if (username==""){
+                alert("Please type a username!");
+                return false;
+            }
+            urlParam += username;
+            var startDate=$('#startDate_user').val();
+            var endDate=$('#endDate_user').val();
+            if (startDate !=""){
+                var arrayStartDate=startDate.split("-");
+                startDate=arrayStartDate[0]+"-"+arrayStartDate[1]+"-"+arrayStartDate[2];
+                urlParam += "/"+startDate+"/";
+                if(endDate==""){
+                    alert("Please select an endDate or delete startDate");
+                    return false;
+                }
+            }
+
+            if (endDate !=""){
+                if (startDate==""){
+                    alert("Please select a startDate or delete endDate");
+                    return false;
+                }
+                var arrayEndDate=endDate.split("-");
+                endDate=arrayEndDate[0]+"-"+arrayEndDate[1]+"-"+arrayEndDate[2];
+                urlParam += endDate+"/";
+            }
+            $('#search_user_changes').attr('href','{{ path('homepage')}}tracking/'+urlParam);
+        });
+        $('a[id^="popupwindow_"]').popupWindow( {
+            centerScreen:1,
+            scrollbars:1,
+            width: 990,
+            height: 740
+        } );
+
+    </script>
+{% endblock %}

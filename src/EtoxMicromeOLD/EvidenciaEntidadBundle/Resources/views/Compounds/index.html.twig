@@ -1,0 +1,82 @@
+{% extends '::frontend.html.twig' %}
+{% block title %}Listing Evidences for {{compuesto}}{% endblock %}
+{% block article %}
+    <div class="ui-widget">
+        <div class="vis-break cntrtxt">
+            <input id="tags" class="ui-autocomplete-input text" onclick="this.value=''" placeholder="e.g. {{ compuesto }}" aria-haspopup="true" aria-autocomplete="list" role="textbox" autocomplete="off" value="{{ compuesto }}">
+
+            <a id="bigSearch" class="button orange" href="">Search</a>
+        </div>
+    </div>
+    <div id="evidences">
+        <h3>Evidences found for: {{ compuesto }}</h3>
+        <div class="btmspc-dbl">
+            <small>
+                <em>
+                    Entity mentions are highlighted as follows:
+                    <mark class="compound">Compounds</mark>
+                    ,
+                    <mark class="enzyme">Enzymes</mark>
+                    and
+                    <mark class="organism">Organisms</mark>
+                </em>
+                . Curated evidences are indicated by:
+                <a class="curated" href="#"> </a>
+            </small>
+        </div>
+        {% for evidenciaEntidad in evidenciasEntidades %}
+            <div class="evidence">
+                <p>
+                    {% set texto=evidenciaEntidad.getEvidencia.getTexto %}
+                    {% set identificadorEvidencia=evidenciaEntidad.getEvidencia.getId %}
+                    {{ texto | highlightEntities (identificadorEvidencia)| raw }}
+                    <small>
+                        {% set curated = evidenciaEntidad.getEvidencia.getCurated %}
+                        {% set arrayPMID = evidenciaEntidad.getEvidencia.getCode|split('_') %}
+                        [PMID:<a target="_blank" href="http://www.ncbi.nlm.nih.gov/pubmed/{{ arrayPMID[0] }}">{{ arrayPMID[0] }}</a>] &nbsp;
+                        {% if curated == 0 %}
+                            <a class="rgt-arw no-curated" href="{{ path('evidencia_compuesto_show', {'id_compuesto':id_compuesto,'id':evidenciaEntidad.getEvidencia.getId}) }}">Curate</a>
+                        {% else %}
+                            <a class="rgt-arw curated" href="{{ path('evidencia_compuesto_show', {'id_compuesto':id_compuesto, 'id':evidenciaEntidad.getEvidencia.getId }) }}">Curate</a>
+
+                        {% endif %}
+                    </small>
+                </p>
+            </div>
+        {% endfor %}
+        <div class="pagination">
+        <ul class="pagination">
+            {% if paginador.currentPage > 1 %}
+                <li class=""><a href="{{ path('evidencias_compuesto_id', { 'page': paginador.previousPage, 'id_compuesto': id_compuesto }) }}">previous</a></li>
+            {% else %}
+                <li class="disabled">previous</li>
+            {% endif %}
+            {% for page in paginador.minPageInRange..paginador.maxPageInRange %}
+                {% if page == paginador.currentPage %}
+                    <li class="current">{{ page }}</li>
+                {% else %}
+                    <li><a href="{{ path('evidencias_compuesto_id', { 'page': page, 'id_compuesto': id_compuesto }) }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if paginador.currentPage < paginador.lastPage %}
+                <li><a href="{{ path('evidencias_compuesto_id', { 'page': paginador.nextPage, 'id_compuesto': id_compuesto }) }}">next</a></li>
+            {% else %}
+                <li>next</li>
+            {% endif %}
+        </ul>
+    </div>
+    {% block javascripts_footer %}
+    <script>
+    	$(function() {
+            $( "#tags" ).autocomplete({
+                source: "{{ path('autocomplete') }}",
+                minLength:3,
+            });
+        });
+        $("#bigSearch").click(function() {
+            var compuesto=$('#tags').val();
+            $('#bigSearch').attr('href','{{ path('homepage') }}compound/'+compuesto);
+        });
+    </script>
+    {% endblock %}
+{% endblock %}

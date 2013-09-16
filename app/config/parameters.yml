@@ -1,0 +1,14 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: EtoxMicromeTebacten
+    database_user: tebacten_symfony
+    database_password: 123.qwe
+    mailer_transport: gmail
+    #mailer_host: 127.0.0.1
+    mailer_user: vayatrendevida@gmail.com
+    mailer_password: Acp66736673
+    locale: en
+    secret: ff4ea2210f8b5d8b4183c74cd295b1cc7251b9b9
+    database_path: null

@@ -1,0 +1,97 @@
+prototype for compuesto
+************************************************************************************
+<a id="chebiID_Astacin" onclick="getChebiIDs('/app_dev.php/get_chebids/','0')" name="chebiID_0" href="#">(Search ChebiIDs)</a>
+<div id="text_5" class="chebi_links"></div>
+<li>
+    <div class="form_row">
+        <div id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_5">
+            <div class="form_row">
+                <input id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_5_textminingName" type="text" value="Astacin" required="required" name="etoxmicrome_evidenciabundle_evidenciatype[evidenciaEntidad][5][textminingName]">
+            </div>
+            <div class="form_row">
+                <div id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_5_compuesto">
+                    <div class="form_row">
+                        <input id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_5_compuesto_chebiId" class="ui-droppable" type="text" required="required" name="etoxmicrome_evidenciabundle_evidenciatype[evidenciaEntidad][5][compuesto][chebiId]">
+                    </div>
+                    <div class="form_row">
+                        <select id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_5_compuesto_inputOutput" required="required" name="etoxmicrome_evidenciabundle_evidenciatype[evidenciaEntidad][5][compuesto][inputOutput]">
+                            <option value="select"></option>
+                            <option value="input">input</option>
+                            <option value="output">output</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#">Delete this entity</a>
+</li>
+************************************************************************************
+
+prototype for enzima
+************************************************************************************
+<br/>To search the Uniprot ID we need the name of the specie:<br/>
+<input id="textminingOrganismName_3" type="text" placeholder="e.g. Homo sapiens">
+<a id="taxId_EC 3.4.24.21" onclick="getTaxId('/scripts/returnTaxonomy.py','taxId_EC 3.4.24.21','textminingOrganismName_3','3', 'fromInput')" name="taxId_EC 3.4.24.21" href="#">(Search taxId)</a>
+<div id="text_3" class="taxId_links"></div>
+<input id="taxId_3" class="ui-droppable" type="text" placeholder="drag here the taxon id">
+<a onclick="getUniprotId('/scripts/returnUniprotId.py','taxId_EC 3.4.24.21','textUnitproId_3','textUnitproId_3')" name="taxId_EC 3.4.24.21" href="#">(Search UniProtId)</a>
+<div id="textUnitproId_3" class="uniprotId_links"></div>
+<li>
+    <div class="form_row">
+        <div id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_3">
+            <div class="form_row">
+                <input id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_3_textminingName" name="etoxmicrome_evidenciabundle_evidenciatype[evidenciaEntidad][3][textminingName]" required="required" value="EC 3.4.24.21" type="text">
+            </div>
+            <div class="form_row">
+                <div id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_3_enzima">
+                    <div class="form_row">
+                        <input id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_3_enzima_idUniprot" name="etoxmicrome_evidenciabundle_evidenciatype[evidenciaEntidad][3][enzima][idUniprot]" required="required" type="text">
+                    </div>
+                    <div class="form_row">
+                        <div id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_3_enzima_proteina" data-prototype="<div class=&quot;form_row&quot;><div id=&quot;etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_3_enzima_proteina___name__&quot;><div class=&quot;form_row&quot;><input type=&quot;text&quot; id=&quot;etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_3_enzima_proteina___name___idOrganismNCBI&quot; name=&quot;etoxmicrome_evidenciabundle_evidenciatype[evidenciaEntidad][3][enzima][proteina][__name__][idOrganismNCBI]&quot; required=&quot;required&quot; /></div><div class=&quot;form_row&quot;><input type=&quot;text&quot; id=&quot;etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_3_enzima_proteina___name___idUniprot&quot; name=&quot;etoxmicrome_evidenciabundle_evidenciatype[evidenciaEntidad][3][enzima][proteina][__name__][idUniprot]&quot; required=&quot;required&quot; /></div></div></div>">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#">Delete this entity</a>
+</li>
+************************************************************************************
+
+
+prototype for organismo
+************************************************************************************
+<a id="taxId_Astacus" onclick="getTaxId('/scripts/returnTaxonomy.py','taxId_Astacus','Astacus','0', 'fromEntity')" name="taxId_Astacus" href="#">(Search taxId)</a>
+<div id="text_0" class="taxId_links"></div>
+<li>
+    <div class="form_row">
+        <div id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_0">
+            <div class="form_row">
+                <input id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_0_textminingName" type="text" value="" required="required" name="etoxmicrome_evidenciabundle_evidenciatype[evidenciaEntidad][0][textminingName]">
+            </div>
+            <div class="form_row">
+                <div id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_0_organismo">
+                    <div class="form_row">
+                        <input id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_0_organismo_idNCBI" class="ui-droppable" type="text" value="" required="required" name="etoxmicrome_evidenciabundle_evidenciatype[evidenciaEntidad][0][organismo][idNCBI]">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#">Delete this entity</a>
+</li>
+************************************************************************************
+
+
+
+
+
+
+<div id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_6">
+    <div class="form_row">
+        <input type="text" id="etoxmicrome_evidenciabundle_evidenciatype_evidenciaEntidad_6_textminingName" name="etoxmicrome_evidenciabundle_evidenciatype[evidenciaEntidad][6][textminingName]" required="required" />
+    </div>
+</div>

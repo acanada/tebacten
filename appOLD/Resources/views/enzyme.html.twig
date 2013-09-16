@@ -1,0 +1,11 @@
+
+{% set textminingName = entidad.vars['data'].getTextminingName %}
+{% set idTrigger = "taxId_" ~ textminingName %}
+<strong>Enzyme found:</strong><br/>
+To search the Uniprot ID we need the name of the specie:<br/>
+<input id="textminingOrganismName_{{ contador }}" type="text" placeholder="e.g. Homo sapiens">
+<a href="#" id="{{ idTrigger }}" name="{{ idTrigger }}" onclick="getTaxId('{{ asset('scripts/returnTaxonomy.py') }}','{{ contador }}', 'fromSearch')">(Search taxId)</a>
+<div id="text_{{ contador }}" class="taxId_links"></div>
+<input id="taxId_{{ contador }}" type="text" placeholder="drag here the taxon id">
+<a href="#" id="getUniprotIds_{{ contador }}" name="{{ idTrigger }}" onclick="getUniprotIds('{{ asset('scripts/returnUniprotIds.py') }}','{{ contador }}','fromSearch')">(Search UniProtId)</a>
+<div id="textUnitproId_{{ contador }}" class="uniprotId_links"></div>

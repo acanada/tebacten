@@ -1,0 +1,181 @@
+http://tebacten/app_dev.php/compound/52092/evidence/1834902/edit/
+
+
+
+<script>
+        function insertReply(content) {
+            document.getElementById('aristolochic acid_text').innerHTML = content;
+        }
+        {% set chebiName=0 %}
+        //$('a[id^="chebiID_"]').click( function() {
+        function returnChebiIDs(chebiName){
+            //id=$(this).attr('id');
+            //var arrayChebiId=id.split("_");
+            //var chebiName=arrayChebiId[1];
+            // create script element
+            var script = document.createElement('script');
+            //alert(chebiName);
+            // assing src with callback name
+            script.src = '{{ path('return_chebids', {'chebiName': chebiName}) }}';
+
+
+            document.body.appendChild(script);
+        //} );
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+<li>
+                <form action="{{ path('evidencia_enzima_delete', {'id_enzima': id_enzima, 'id': entity.id }) }}" method="post">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    {{ form_widget(delete_form) }}
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+
+
+
+
+
+
+
+        {# form_widget(ev_en, { 'attr': {'class': clase} })  #}
+
+            {% for entidad in ev_en %}
+                {% set clase="ev_ent_" ~ number %}
+                {{ form_widget(entidad, { 'attr': {'class': clase} }) }}
+                {% set number=number+1 %}
+        {% endfor %}
+
+
+
+
+        {{ form_errors(edit_form) }}
+        {{ form_row(edit_form.texto) }}
+        {% for ev_en in edit_form.evidenciaEntidad %}
+            {% for entidad in ev_en %}
+                {{  }}
+            {% endfor %}
+        {% endfor %}
+
+
+// Get the ul that holds the collection of evidenciaEntidad
+var collectionHolder = $('ul.evidenciaEntidad-list');
+
+// setup an "add a tag" link
+var $addEvidenciaEntidadLink = $('<a href="#" class="add_evidenciaEntidad_link">Add a new entity</a>');
+var $newLinkLi = $('<li></li>').append($addEvidenciaEntidadLink);
+
+
+function addEvidenciaEntidadFormDeleteLink($evidenciaEntidadFormLi) {
+    var $removeFormA = $('<a href="#">delete this entity</a>');
+    $evidenciaEntidadFormLi.append($removeFormA);
+
+    $removeFormA.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // remove the li for the tag form
+        $evidenciaEntidadFormLi.remove();
+    });
+}
+
+function addEvidenciaEntidadForm(collectionHolder, $newLinkLi) {
+    // Get the data-prototype explained earlier
+    var prototype = collectionHolder.data('prototype');
+
+    // get the new index
+    var index = collectionHolder.data('index');
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+    addEvidenciaEntidadFormDeleteLink($newFormLi);
+}
+
+jQuery(document).ready(function() {
+
+    // add a delete link to all of the existing tag form li elements
+    collectionHolder.find('li').each(function() {
+        addTagEvidenciaEntidadDeleteLink($(this));
+    });
+
+    // add the "add an entity" anchor and li to the tags ul
+    collectionHolder.append($newLinkLi);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    collectionHolder.data('index', collectionHolder.find(':input').length);
+
+    $addEvidenciaEntidadLink.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new evidenciaEntidad form (see next code block)
+        addEvidenciaEntidadForm(collectionHolder, $newLinkLi);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+        // keep track of how many evidenciaEntidad fields have been rendered
+        var evidenciaEntidadCount = '{{ edit_form.evidenciaEntidad | length }}';
+        jQuery(document).ready(function() {
+            jQuery('#add-another-evidenciaEntidad').click(function() {
+                var evidenciaEntidadList = jQuery('#evidenciaEntidad-list');
+
+                // grab the prototype template
+                var newWidget = evidenciaEntidadList.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/__name__/g, evidenciaEntidadCount);
+
+                evidenciaEntidadCount++;
+
+                // create a new list element and add it to the list
+                var newLi = jQuery('<li></li>').html(newWidget);
+                newLi.appendTo(jQuery('#evidenciaEntidad-list'));
+
+                var $removeFormA = '<a href="#">delete this evidence</a>';
+                newLi.append($removeFormA);
+                $removeFormA('click', function(e) {
+                    // prevent the link from creating a "#" on the URL
+                    e.preventDefault();
+
+                    // remove the li for the tag form
+                    newLi.remove();
+                });
+                return false;
+            });
+        })
+    </script>

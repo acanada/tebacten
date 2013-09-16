@@ -1,0 +1,326 @@
+{% extends '::frontend.html.twig' %}
+{% block article -%}
+        <div id="right-content">
+            <div id="evidenceText">
+                <ul>
+                    <li><h2>Track changes by User:</h2></li>
+                        <table>
+                            <tr>
+                                <td>User: </td>
+                                <td><input id="tags_user" class="ui-autocomplete-input text" onclick="this.value=''" placeholder="Type username" aria-haspopup="true" aria-autocomplete="list" role="textbox" autocomplete="off" value=""></td>
+                            </tr>
+                            <tr>
+                                <td>From Date:</td>
+                                <td><input id="startDate_user" class="datepicker text" type="text" value="" placeholder="select date (optional)"></td>
+                            </tr>
+                            <tr>
+                                <td>To Date:</td>
+                                <td><input id="endDate_user" class="ui-autocomplete-input datepicker text" type="text" value="" placeholder="select date (optional)"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><a id="search_user_changes" class="button orange" href="">Search</a></td>
+                            </tr>
+                        </table>
+                    <hr/>
+                    <li><h2>Track changes of an specific entity:</h2></li>
+                        <table>
+                            <tr>
+                                <td>Entity: </td>
+                                <td><input id="tags_entity" class="ui-autocomplete-input text" onclick="this.value=''" placeholder="Specie/enzyme/chemical" aria-haspopup="true" aria-autocomplete="list" role="textbox" autocomplete="off" value=""></td>
+                            </tr>
+                            <tr>
+                                <td>From Date:</td>
+                                <td><input id="startDate_entity" class="datepicker text" type="text" value="" placeholder="select date (optional)"></td>
+                            </tr>
+                            <tr>
+                                <td>To Date:</td>
+                                <td><input id="endDate_entity" class="ui-autocomplete-input datepicker text" type="text" value="" placeholder="select date (optional)"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><a id="search_entity_changes" class="button orange" href="">Search</a></td>
+                            </tr>
+                        </table>
+                    <hr/>
+                    <li><h2>Track changes of an specific evidence:</h2></li>
+                        <table>
+                            <tr>
+                                <td>idEvidence: </td>
+                                <td><input id="tags_evidence" class="text" onclick="this.value=''" placeholder="Evidence ID" aria-haspopup="true" aria-autocomplete="list" role="textbox" autocomplete="off" value=""></td>
+                            </tr>
+                            <tr>
+                                <td>From Date:</td>
+                                <td><input id="startDate_evidence" class="datepicker text" type="text" value="" placeholder="select date (optional)"></td>
+                            </tr>
+                            <tr>
+                                <td>To Date:</td>
+                                <td><input id="endDate_evidence" class="ui-autocomplete-input datepicker text" type="text" value="" placeholder="select date (optional)"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><a id="search_evidence_changes" class="button orange" href="">Search</a></td>
+                            </tr>
+                        </table>
+                    <hr/>
+                </ul>
+            </div>
+            <div id="content">
+            </div>
+        </div><!-- right-content  -->
+        <div class="clear-both"></div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        // implementation of disabled form fields
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+        var checkin = $('#startDate_user').fdatepicker({
+                format: 'dd-mm-yyyy',
+                onRender: function (date) {
+                    return date.valueOf() > now.valueOf() ? 'disabled' : '';
+                }
+            }).on('changeDate', function (ev) {
+            if (ev.date.valueOf() > checkout.date.valueOf()) {
+                var newDate = new Date(ev.date)
+                newDate.setDate(newDate.getDate() + 1);
+                checkout.setValue(newDate);
+            }
+            checkin.hide();
+            $('#endDate_user')[0].focus();
+        }).data('datepicker');
+
+
+        var checkout = $('#endDate_user').fdatepicker({
+            format: 'dd-mm-yyyy',
+            onRender: function (date) {
+                return date.valueOf() > checkin.date.valueOf() ? 'disabled' : '';
+            }
+        }).data('datepicker');
+
+    </script>
+
+    <script>
+        // implementation of disabled form fields
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+        var checkin = $('#startDate_entity').fdatepicker({
+                format: 'dd-mm-yyyy',
+                onRender: function (date) {
+                    return date.valueOf() > now.valueOf() ? 'disabled' : '';
+                }
+            }).on('changeDate', function (ev) {
+            if (ev.date.valueOf() > checkout.date.valueOf()) {
+                var newDate = new Date(ev.date)
+                newDate.setDate(newDate.getDate() + 1);
+                checkout.setValue(newDate);
+            }
+            checkin.hide();
+            $('#endDate_entity')[0].focus();
+        }).data('datepicker');
+
+
+        var checkout = $('#endDate_entity').fdatepicker({
+            format: 'dd-mm-yyyy',
+            onRender: function (date) {
+                return date.valueOf() > checkin.date.valueOf() ? 'disabled' : '';
+            }
+        }).data('datepicker');
+
+    </script>
+
+    <script>
+        // implementation of disabled form fields
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+        var checkin = $('#startDate_evidence').fdatepicker({
+            format: 'dd-mm-yyyy',
+            onRender: function (date) {
+                return date.valueOf() > now.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            if (ev.date.valueOf() > checkout.date.valueOf()) {
+                var newDate = new Date(ev.date)
+                newDate.setDate(newDate.getDate() + 1);
+                checkout.setValue(newDate);
+            }
+            checkin.hide();
+            $('#endDate_evidence')[0].focus();
+        }).data('datepicker');
+        var checkout = $('#endDate_evidence').fdatepicker({
+            format: 'dd-mm-yyyy',
+            onRender: function (date) {
+                return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            checkout.hide();
+        }).data('datepicker');
+
+    </script>
+
+    <script>
+    	$(function() {
+            $( "#tags_user" ).autocomplete({
+                source: "{{ path('autocomplete_user') }}",
+                minLength:3,
+            });
+        });
+
+        $("#search_user_changes").click(function() {
+            var username=$('#tags_user').val();
+            urlParam="";
+            if (username==""){
+                alert("Please type a username!");
+                return false;
+            }
+            urlParam += username;
+
+            var startDate=$('#startDate_user').val();
+            var endDate=$('#endDate_user').val();
+            if (startDate !=""){
+                urlParam += "/"+startDate+"/";
+                if(endDate==""){
+                    alert("Please select an endDate or delete startDate");
+                    return false;
+                }
+            }
+
+            if (endDate !=""){
+
+                if (startDate==""){
+                    alert("Please select a startDate or delete endDate");
+                    return false;
+                }
+                urlParam += endDate+"/";
+            }
+
+            arrayStartDate=startDate.split("-");
+            startDateDay=arrayStartDate[0];
+            startDateMonth=arrayStartDate[1];
+            startDateYear=arrayStartDate[2];
+
+            arrayEndDate=endDate.split("-");
+            endDateDay=arrayEndDate[0];
+            endDateMonth=arrayEndDate[1];
+            endDateYear=arrayEndDate[2];
+
+            var startDateObject = new Date();
+            startDateObject.setFullYear(startDateYear,startDateMonth,startDateDay);
+            var endDateObject = new Date();
+            endDateObject.setFullYear(endDateYear,endDateMonth,endDateDay);
+
+            if(endDateObject<startDateObject){
+                alert("endDate must be after StartDate");
+                return false;
+            }
+            $('#search_user_changes').attr('href','{{ path('homepage')}}tracking/'+urlParam);
+        });
+    	$(function() {
+            $( "#tags_entity" ).autocomplete({
+                source: "{{ path('autocomplete') }}",
+                minLength:3,
+            });
+        });
+
+        $("#search_entity_changes").click(function() {
+            var entity=$('#tags_entity').val();
+            urlParam="";
+            if (entity==""){
+                alert("Please type an entity!");
+                return false;
+            }
+            urlParam += entity;
+
+            var startDate=$('#startDate_entity').val();
+            var endDate=$('#endDate_entity').val();
+            if (startDate !=""){
+                urlParam += "/"+startDate+"/";
+                if(endDate==""){
+                    alert("Please select an endDate or delete startDate");
+                    return false;
+                }
+            }
+
+            if (endDate !=""){
+
+                if (startDate==""){
+                    alert("Please select a startDate or delete endDate");
+                    return false;
+                }
+                urlParam += endDate+"/";
+            }
+
+            arrayStartDate=startDate.split("-");
+            startDateDay=arrayStartDate[0];
+            startDateMonth=arrayStartDate[1];
+            startDateYear=arrayStartDate[2];
+
+            arrayEndDate=endDate.split("-");
+            endDateDay=arrayEndDate[0];
+            endDateMonth=arrayEndDate[1];
+            endDateYear=arrayEndDate[2];
+
+            var startDateObject = new Date();
+            startDateObject.setFullYear(startDateYear,startDateMonth,startDateDay);
+            var endDateObject = new Date();
+            endDateObject.setFullYear(endDateYear,endDateMonth,endDateDay);
+
+            if(endDateObject<startDateObject){
+                alert("endDate must be after StartDate");
+                return false;
+            }
+            $('#search_entity_changes').attr('href','{{ path('homepage')}}tracking/entity/'+urlParam);
+        });
+
+        $("#search_evidence_changes").click(function() {
+            var evidence=$('#tags_evidence').val();
+            urlParam="";
+            if (evidence==""){
+                alert("Please type an entity!");
+                return false;
+            }
+            urlParam += evidence;
+            var startDate=$('#startDate_evidence').val();
+            var endDate=$('#endDate_evidence').val();
+            if (startDate !=""){
+                urlParam += "/"+startDate+"/";
+                if(endDate==""){
+                    alert("Please select an endDate or delete startDate");
+                    return false;
+                }
+            }
+
+            if (endDate !=""){
+
+                if (startDate==""){
+                    alert("Please select a startDate or delete endDate");
+                    return false;
+                }
+                urlParam += endDate+"/";
+            }
+
+            arrayStartDate=startDate.split("-");
+            startDateDay=arrayStartDate[0];
+            startDateMonth=arrayStartDate[1];
+            startDateYear=arrayStartDate[2];
+
+            arrayEndDate=endDate.split("-");
+            endDateDay=arrayEndDate[0];
+            endDateMonth=arrayEndDate[1];
+            endDateYear=arrayEndDate[2];
+
+            var startDateObject = new Date();
+            startDateObject.setFullYear(startDateYear,startDateMonth,startDateDay);
+            var endDateObject = new Date();
+            endDateObject.setFullYear(endDateYear,endDateMonth,endDateDay);
+            if(endDateObject<startDateObject){
+                alert("endDate must be after StartDate");
+                return false;
+            }
+            $('#search_evidence_changes').attr('href','{{ path('homepage')}}tracking/evidence/'+urlParam);
+        });
+    </script>
+{% endblock %}

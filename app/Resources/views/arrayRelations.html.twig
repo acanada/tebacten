@@ -1,0 +1,47 @@
+{% set arrayEvidenciaEntidad=edit_form.vars.value.getEvidenciaEntidad.getValues %}
+{# arrayTableRelations | ld #}
+{# arrayEvidenciaEntidad | ld #}
+<form method="post" action="{{ path('guardar_relaciones', {'entity_type': entity_type, 'entity_id': id_entidad, 'id_evidence': id_evidencia}) }}" >
+    <table id="table_reactions">
+        <tr>
+            {# First we draw the headers of the table #}
+            <th>&nbsp;</th>
+            {% for evidenciaEntidad in arrayEvidenciaEntidad %}
+                <th>{{ evidenciaEntidad.textminingName }}</th>
+            {% endfor %}
+        </tr>
+        {# Then we draw the rows of the table #}
+        {% set arrayHorizontal=arrayEvidenciaEntidad %} {# Creamos este array para recorrerlo y tomar los datos de las celdas en horizontal #}
+        {% set contador=1 %}
+        {% for evidenciaEntidad in arrayEvidenciaEntidad %}
+            <tr>
+                <td class="horizontal-header">{{ evidenciaEntidad.textminingName }}</td>
+                {# Then we insert the cells of the table #}
+                {% for evidenciaEntidadHorizontal in arrayHorizontal %}
+                    <td>
+                        {# Then we add the types of relation that two entities can establish #}
+                        {# Antes de poner las relaciones miramos a ver si existe un valor para esa relacion y lo ponemos como selected! para eso buscamos en el arrayTableRelations #}
+                        {% set relacionExistente = arrayTableRelations[evidenciaEntidad.id][evidenciaEntidadHorizontal.id] %}
+                        {% set relacion= relacionExistente |split('|') %}
+                        {% set id_relacion = relacion[0] %}
+                        {% set nombre_relacion = relacion[1] %}
+
+                        <select name="relation-{{ evidenciaEntidad.id }}|{{ evidenciaEntidadHorizontal.id }}">
+                            <option value="" selected>&nbsp;</option>
+                            {% for relation in arrayRelations %}
+                                {% if relation == nombre_relacion %}
+                                    <option value="{{ relation }}" selected>{{ relation }}</option>
+                                {% else%}
+                                    <option value="{{ relation }}">{{ relation }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                    {% set contador=contador+1 %}
+                {% endfor %}
+
+            </tr>
+        {% endfor %}
+    </table>
+    <button class="button orange" type="submit">Save Relations</button>
+</form>
